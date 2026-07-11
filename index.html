@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Vishal's Dental Care & Implant Centre | Unnao</title>
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+    :root{
+        --primary:#0891b2; --secondary:#06b6d4; --dark:#0f172a; --light:#f0f9ff;
+        --accent:#f59e0b; --green:#10b981; --purple:#8b5cf6; --pink:#ec4899;
+    }
+    html{ scroll-behavior:smooth; }
+    body{ background:#fafafa; color:var(--dark); overflow-x:hidden; }
+
+    /* NAVBAR */
+    nav{ position:fixed; top:0; width:100%; background:rgba(8,20,40,.97); backdrop-filter:blur(15px);
+        padding:12px 5%; display:flex; justify-content:space-between; align-items:center; z-index:1000;
+        border-bottom:2px solid rgba(6,182,212,.3); transition:all .3s; }
+    nav.scrolled{ padding:8px 5%; box-shadow:0 4px 30px rgba(8,145,178,.3); }
+    .logo{ display:flex; align-items:center; gap:12px; color:#fff; text-decoration:none; }
+    .logo-img{ width:48px; height:48px; border-radius:50%; border:2px solid var(--secondary); object-fit:cover; object-position:top; animation:pulse 3s infinite; }
+    .logo-text .name{ font-size:1rem; font-weight:700; color:#fff; }
+    .logo-text .sub{ font-size:.7rem; color:var(--secondary); letter-spacing:1px; }
+    @keyframes pulse{ 0%,100%{box-shadow:0 0 0 0 rgba(6,182,212,.7);} 50%{box-shadow:0 0 0 8px rgba(6,182,212,0);} }
+    .nav-links{ display:flex; gap:25px; list-style:none; }
+    .nav-links a{ color:#94a3b8; text-decoration:none; font-weight:500; font-size:.95rem; position:relative; transition:color .3s; }
+    .nav-links a::after{ content:''; position:absolute; bottom:-5px; left:0; width:0; height:2px;
+        background:linear-gradient(90deg,var(--secondary),var(--accent)); transition:width .3s; border-radius:2px; }
+    .nav-links a:hover{ color:#fff; } .nav-links a:hover::after{ width:100%; }
+    .nav-cta{ background:linear-gradient(135deg,var(--primary),var(--secondary)); color:#fff !important;
+        padding:8px 18px; border-radius:25px; transition:all .3s !important; }
+    .nav-cta:hover{ transform:translateY(-2px); box-shadow:0 5px 15px rgba(6,182,212,.5); }
+    .menu-toggle{ display:none; color:#fff; font-size:1.6rem; cursor:pointer; background:none; border:none; }
+
+    /* HERO */
+    .hero{ min-height:100vh; background:linear-gradient(135deg,#0f172a 0%,#0c1a3a 40%,#0a3045 70%,#0891b2 100%);
+        display:flex; align-items:center; padding:100px 5% 60px; position:relative; overflow:hidden; }
+    .hero-particles{ position:absolute; inset:0; overflow:hidden; }
+    .particle{ position:absolute; width:6px; height:6px; background:rgba(6,182,212,.6); border-radius:50%; animation:particleFloat linear infinite; }
+    @keyframes particleFloat{ 0%{transform:translateY(100vh) rotate(0);opacity:0;} 10%{opacity:1;} 90%{opacity:1;} 100%{transform:translateY(-100px) rotate(720deg);opacity:0;} }
+    .hero-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; max-width:1300px; margin:0 auto; position:relative; z-index:2; width:100%; }
+    .hero-content{ animation:slideInLeft 1s ease; }
+    @keyframes slideInLeft{ from{opacity:0;transform:translateX(-60px);} to{opacity:1;transform:translateX(0);} }
+    .hero-badge{ display:inline-flex; align-items:center; gap:8px; background:rgba(6,182,212,.15); border:1px solid rgba(6,182,212,.4);
+        padding:8px 20px; border-radius:30px; color:var(--secondary); font-size:.9rem; margin-bottom:25px; }
+    .hero h1{ font-size:clamp(2rem,4vw,3.2rem); color:#fff; line-height:1.2; margin-bottom:12px; font-weight:800; }
+    .hero h1 span{ background:linear-gradient(135deg,var(--secondary),var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .hero-subtitle{ color:#94a3b8; font-size:1.1rem; margin-bottom:20px; line-height:1.6; }
+    .hero-rating{ display:flex; align-items:center; gap:15px; margin-bottom:30px; flex-wrap:wrap; }
+    .stars{ color:var(--accent); font-size:1.3rem; }
+    .rating-text{ color:#fff; font-weight:600; }
+    .rating-badge{ background:rgba(245,158,11,.2); border:1px solid var(--accent); color:var(--accent); padding:4px 12px; border-radius:20px; font-size:.85rem; }
+    .hero-btns{ display:flex; gap:15px; flex-wrap:wrap; }
+    .btn{ padding:14px 30px; border:none; border-radius:30px; font-size:1rem; font-weight:600; cursor:pointer; transition:all .3s; text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
+    .btn-primary{ background:linear-gradient(135deg,var(--primary),var(--secondary)); color:#fff; box-shadow:0 5px 20px rgba(8,145,178,.5); }
+    .btn-primary:hover{ transform:translateY(-4px); box-shadow:0 10px 30px rgba(8,145,178,.7); }
+    .btn-outline{ background:transparent; color:#fff; border:2px solid rgba(255,255,255,.4); }
+    .btn-outline:hover{ background:rgba(255,255,255,.1); transform:translateY(-4px); border-color:#fff; }
+
+    .hero-image{ display:flex; flex-direction:column; justify-content:center; align-items:center; animation:slideInRight 1s ease; position:relative; }
+    @keyframes slideInRight{ from{opacity:0;transform:translateX(60px);} to{opacity:1;transform:translateX(0);} }
+    .doctor-frame{ position:relative; width:380px; height:450px; }
+    .doctor-frame::before{ content:''; position:absolute; inset:-15px; background:linear-gradient(135deg,var(--secondary),var(--accent),var(--purple)); border-radius:30px; z-index:0; animation:borderRotate 4s linear infinite; }
+    @keyframes borderRotate{ 0%{filter:hue-rotate(0);} 100%{filter:hue-rotate(360deg);} }
+    .doctor-img-wrap{ position:relative; z-index:1; width:100%; height:100%; border-radius:25px; overflow:hidden; background:#0f172a; }
+    .doctor-img-wrap img{ width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+    .doctor-badge-card{ position:absolute; background:#fff; padding:12px 18px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,.3); z-index:3; display:flex; align-items:center; gap:10px; }
+    .doctor-badge-card.top-left{ top:-20px; left:-30px; animation:floatBadge 3s ease-in-out infinite; }
+    .doctor-badge-card.bottom-right{ bottom:-20px; right:-30px; animation:floatBadge 3s ease-in-out infinite reverse; }
+    @keyframes floatBadge{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+    .badge-icon{ width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.3rem; }
+    .badge-icon.gold{ background:linear-gradient(135deg,#f59e0b,#fbbf24); }
+    .badge-icon.blue{ background:linear-gradient(135deg,var(--primary),var(--secondary)); }
+    .badge-info .num{ font-size:1.1rem; font-weight:700; color:var(--dark); }
+    .badge-info .label{ font-size:.75rem; color:#64748b; }
+
+    /* 15+ Years Experience Sticker */
+    .exp-sticker{
+        margin-top:20px;
+        display:inline-flex;
+        align-items:center;
+        gap:10px;
+        background:linear-gradient(135deg,#f59e0b,#f97316);
+        color:#fff;
+        padding:12px 28px;
+        border-radius:50px;
+        font-size:1rem;
+        font-weight:800;
+        letter-spacing:0.5px;
+        box-shadow:0 8px 25px rgba(245,158,11,.45);
+        animation:stickerPulse 2.5s ease-in-out infinite;
+        position:relative;
+        z-index:5;
+    }
+    .exp-sticker .sticker-icon{
+        font-size:1.4rem;
+    }
+    @keyframes stickerPulse{
+        0%,100%{ transform:scale(1); box-shadow:0 8px 25px rgba(245,158,11,.45); }
+        50%{ transform:scale(1.05); box-shadow:0 12px 35px rgba(245,158,11,.65); }
+    }
+
+    section{ padding:90px 5%; }
+    .section-title{ text-align:center; margin-bottom:60px; }
+    .section-tag{ display:inline-block; padding:6px 18px; border-radius:20px; font-size:.85rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:15px; }
+    .tag-blue{ background:rgba(8,145,178,.1); color:var(--primary); border:1px solid rgba(8,145,178,.3); }
+    .section-title h2{ font-size:clamp(1.8rem,3.5vw,2.8rem); color:var(--dark); margin-bottom:15px; font-weight:800; position:relative; display:inline-block; }
+    .section-title h2::after{ content:''; position:absolute; bottom:-12px; left:50%; transform:translateX(-50%); width:80px; height:4px; background:linear-gradient(90deg,var(--primary),var(--accent)); border-radius:2px; }
+    .section-title p{ color:#64748b; margin-top:25px; font-size:1.1rem; max-width:600px; margin-left:auto; margin-right:auto; }
+
+    /* DOCTOR PROFILE */
+    #doctor{ background:linear-gradient(135deg,#f8faff,#f0f9ff); }
+    .doctor-profile{ display:grid; grid-template-columns:380px 1fr; gap:60px; align-items:start; max-width:1200px; margin:0 auto; }
+    .profile-card{ background:#fff; border-radius:25px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,.12); position:sticky; top:90px; transition:transform .4s; }
+    .profile-card:hover{ transform:translateY(-8px); }
+    .profile-img-wrap{ position:relative; height:380px; overflow:hidden; }
+    .profile-img-wrap img{ width:100%; height:100%; object-fit:cover; object-position:top center; display:block; transition:transform .5s; }
+    .profile-card:hover .profile-img-wrap img{ transform:scale(1.05); }
+    .profile-img-overlay{ position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top,rgba(8,20,50,.95),transparent); padding:30px 20px 20px; color:#fff; }
+    .profile-img-overlay h3{ font-size:1.4rem; font-weight:700; }
+    .profile-img-overlay p{ color:var(--secondary); font-size:.95rem; }
+    .profile-details{ padding:25px; }
+    .profile-stat{ display:flex; justify-content:space-around; margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid #e2e8f0; }
+    .p-stat{ text-align:center; }
+    .p-stat .num{ font-size:1.5rem; font-weight:800; color:var(--primary); }
+    .p-stat .lbl{ font-size:.8rem; color:#64748b; }
+    .award-badge{ display:flex; align-items:center; gap:12px; background:linear-gradient(135deg,#fffbeb,#fef3c7); padding:15px; border-radius:12px; border:1px solid #fbbf24; margin-bottom:15px; }
+    .award-icon{ font-size:2rem; }
+    .award-text .t{ font-weight:700; color:var(--dark); font-size:.95rem; }
+    .award-text .s{ color:#92400e; font-size:.8rem; }
+    .contact-btn-wrap{ display:flex; flex-direction:column; gap:10px; margin-top:20px; }
+    .call-btn{ display:flex; align-items:center; justify-content:center; gap:10px; padding:13px; background:linear-gradient(135deg,var(--primary),var(--secondary)); color:#fff; border-radius:12px; text-decoration:none; font-weight:600; transition:all .3s; }
+    .call-btn:hover{ transform:translateY(-3px); box-shadow:0 8px 25px rgba(8,145,178,.5); }
+    .whatsapp-btn-inline{ display:flex; align-items:center; justify-content:center; gap:10px; padding:13px; background:linear-gradient(135deg,#25D366,#128C7E); color:#fff; border-radius:12px; text-decoration:none; font-weight:600; transition:all .3s; }
+    .whatsapp-btn-inline:hover{ transform:translateY(-3px); box-shadow:0 8px 25px rgba(37,211,102,.5); }
+
+    .doctor-info h3{ font-size:2rem; font-weight:800; color:var(--dark); margin-bottom:5px; }
+    .doctor-title{ color:var(--primary); font-size:1.1rem; margin-bottom:20px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .title-tag{ background:rgba(8,145,178,.1); color:var(--primary); padding:4px 12px; border-radius:20px; font-size:.85rem; font-weight:600; border:1px solid rgba(8,145,178,.3); }
+    .about-text{ color:#475569; line-height:1.8; font-size:1rem; margin-bottom:25px; padding:20px; background:#fff; border-radius:15px; border-left:4px solid var(--secondary); box-shadow:0 5px 15px rgba(0,0,0,.05); }
+    .edu-grid{ display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:30px; }
+    .edu-card{ background:#fff; padding:20px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,.07); display:flex; align-items:center; gap:15px; transition:transform .3s; }
+    .edu-card:hover{ transform:translateY(-5px); }
+    .edu-icon{ width:50px; height:50px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0; }
+    .edu-icon.cyan{ background:linear-gradient(135deg,#0891b2,#06b6d4); }
+    .edu-icon.gold{ background:linear-gradient(135deg,#f59e0b,#fbbf24); }
+    .edu-icon.green{ background:linear-gradient(135deg,#10b981,#34d399); }
+    .edu-icon.purple{ background:linear-gradient(135deg,#8b5cf6,#a78bfa); }
+    .edu-card h4{ font-size:.9rem; color:#64748b; }
+    .edu-card p{ font-weight:700; color:var(--dark); font-size:.95rem; }
+
+    .treatments-wrap h4{ font-size:1.2rem; color:var(--dark); margin-bottom:20px; font-weight:700; display:flex; align-items:center; gap:10px; }
+    .treatments-wrap h4::before{ content:''; width:4px; height:20px; background:linear-gradient(135deg,var(--primary),var(--secondary)); border-radius:2px; }
+    .treatments-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+    .treatment-pill{ background:#fff; border:1px solid #e2e8f0; padding:10px 14px; border-radius:10px; font-size:.82rem; color:#475569; display:flex; align-items:center; gap:8px; transition:all .3s; cursor:default; }
+    .treatment-pill::before{ content:'🦷'; font-size:.9rem; flex-shrink:0; }
+    .treatment-pill:hover{ background:linear-gradient(135deg,var(--primary),var(--secondary)); color:#fff; border-color:transparent; transform:translateY(-2px); box-shadow:0 5px 15px rgba(8,145,178,.3); }
+    .treatment-pill:hover::before{ content:'✅'; }
+
+    /* SERVICES */
+    #services{ background:linear-gradient(180deg,#fff,var(--light)); }
+    .services-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:30px; max-width:1300px; margin:0 auto; }
+    .service-card{ border-radius:20px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.1); transition:all .4s; cursor:pointer; position:relative; background:#fff; }
+    .service-card:hover{ transform:translateY(-12px); box-shadow:0 25px 60px rgba(0,0,0,.18); }
+    .service-img{ width:100%; height:200px; object-fit:cover; display:block; transition:transform .5s; }
+    .service-card:hover .service-img{ transform:scale(1.08); }
+    .service-img-wrap{ overflow:hidden; position:relative; }
+    .service-img-wrap::after{ content:''; position:absolute; bottom:0; left:0; right:0; height:60px; background:linear-gradient(to top,#fff,transparent); }
+    .service-body{ padding:20px 25px 25px; }
+    .service-icon-row{ display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+    .s-icon{ width:45px; height:45px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; transition:transform .4s; }
+    .service-card:hover .s-icon{ transform:rotate(15deg) scale(1.1); }
+    .service-body h3{ font-size:1.1rem; font-weight:700; color:var(--dark); }
+    .service-body p{ color:#64748b; font-size:.9rem; line-height:1.6; margin-bottom:15px; }
+    .service-tag{ display:inline-block; padding:4px 12px; border-radius:15px; font-size:.8rem; font-weight:600; color:#fff; }
+    .c1{background:linear-gradient(135deg,#0891b2,#06b6d4);} .c2{background:linear-gradient(135deg,#8b5cf6,#a78bfa);}
+    .c3{background:linear-gradient(135deg,#f59e0b,#fbbf24);} .c4{background:linear-gradient(135deg,#10b981,#34d399);}
+    .c5{background:linear-gradient(135deg,#ec4899,#f472b6);} .c6{background:linear-gradient(135deg,#ef4444,#f87171);}
+
+    /* STATS */
+    .stats{ background:linear-gradient(135deg,#0f172a,#0c2a4a,#0891b2); padding:70px 5%; position:relative; overflow:hidden; }
+    .stats::before{ content:''; position:absolute; width:500px; height:500px; background:rgba(6,182,212,.1); border-radius:50%; top:-200px; right:-100px; }
+    .stats-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:30px; max-width:1200px; margin:0 auto; text-align:center; position:relative; z-index:2; }
+    .stat-item{ color:#fff; padding:30px 20px; border-radius:20px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); backdrop-filter:blur(5px); transition:all .4s; }
+    .stat-item:hover{ background:rgba(6,182,212,.2); transform:translateY(-8px); }
+    .stat-emoji{ font-size:2.5rem; display:block; margin-bottom:15px; }
+    .stat-item h3{ font-size:2.8rem; font-weight:800; background:linear-gradient(135deg,#fff,var(--secondary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .stat-item p{ color:#94a3b8; font-size:1rem; margin-top:5px; }
+
+    /* REVIEWS */
+    #reviews{ background:#fff; }
+    .overall-rating{ display:flex; justify-content:center; gap:30px; margin-bottom:50px; flex-wrap:wrap; }
+    .rating-big{ background:linear-gradient(135deg,var(--primary),var(--secondary)); color:#fff; padding:30px 40px; border-radius:20px; text-align:center; min-width:160px; box-shadow:0 15px 40px rgba(8,145,178,.4); }
+    .rating-big .num{ font-size:3.5rem; font-weight:800; display:block; }
+    .rating-big .stars{ font-size:1.5rem; } .rating-big .lbl{ font-size:.9rem; opacity:.9; }
+    .reviews-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:25px; max-width:1200px; margin:0 auto; }
+    .review-card{ background:linear-gradient(135deg,#f8faff,#f0f9ff); padding:30px; border-radius:20px; border:2px solid transparent; transition:all .4s; position:relative; overflow:hidden; }
+    .review-card::before{ content:'"'; position:absolute; top:-10px; left:15px; font-size:8rem; color:var(--secondary); opacity:.1; font-family:Georgia,serif; line-height:1; }
+    .review-card:hover{ border-color:var(--secondary); transform:translateY(-8px); box-shadow:0 20px 50px rgba(8,145,178,.15); }
+    .review-header{ display:flex; align-items:center; gap:15px; margin-bottom:15px; }
+    .review-avatar{ width:55px; height:55px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1.3rem; flex-shrink:0; }
+    .av1{background:linear-gradient(135deg,#0891b2,#8b5cf6);} .av2{background:linear-gradient(135deg,#f59e0b,#ef4444);} .av3{background:linear-gradient(135deg,#10b981,#0891b2);}
+    .review-name{ font-weight:700; color:var(--dark); font-size:1rem; }
+    .review-date{ color:#64748b; font-size:.85rem; }
+    .review-stars{ color:var(--accent); font-size:1.1rem; margin-bottom:10px; }
+    .review-text{ color:#475569; line-height:1.7; font-style:italic; }
+
+    /* CONTACT */
+    #contact{ background:linear-gradient(135deg,#f8faff,#f0f9ff); }
+    .contact-grid{ display:grid; grid-template-columns:1fr 1.2fr; gap:40px; max-width:1100px; margin:0 auto; }
+    .contact-info{ background:linear-gradient(135deg,#0f172a,#0c2a4a); padding:40px; border-radius:25px; color:#fff; position:relative; overflow:hidden; }
+    .contact-info::before{ content:'🦷'; position:absolute; font-size:15rem; opacity:.04; right:-50px; bottom:-50px; }
+    .contact-info h3{ font-size:1.5rem; margin-bottom:30px; color:#fff; }
+    .contact-item{ display:flex; gap:18px; margin-bottom:25px; align-items:flex-start; }
+    .ci-icon{ width:50px; height:50px; background:rgba(6,182,212,.2); border:1px solid rgba(6,182,212,.4); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
+    .contact-item h4{ color:var(--secondary); font-size:.9rem; text-transform:uppercase; letter-spacing:1px; }
+    .contact-item p,.contact-item a{ color:#94a3b8; line-height:1.6; font-size:.95rem; text-decoration:none; }
+    .contact-item a:hover{ color:#fff; }
+    .contact-form{ background:#fff; padding:40px; border-radius:25px; box-shadow:0 15px 50px rgba(0,0,0,.1); }
+    .contact-form h3{ font-size:1.5rem; margin-bottom:25px; color:var(--dark); }
+    .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+    .form-group{ margin-bottom:18px; }
+    .form-group label{ display:block; margin-bottom:8px; color:var(--dark); font-weight:600; font-size:.9rem; }
+    .form-group input,.form-group select,.form-group textarea{ width:100%; padding:13px 16px; border:2px solid #e2e8f0; border-radius:12px; font-size:.95rem; transition:all .3s; font-family:inherit; background:#fafafa; }
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{ outline:none; border-color:var(--secondary); background:#fff; box-shadow:0 0 0 4px rgba(6,182,212,.1); }
+    .form-group textarea{ resize:vertical; min-height:110px; }
+    .submit-btn{ width:100%; padding:15px; background:linear-gradient(135deg,var(--primary),var(--secondary)); color:#fff; border:none; border-radius:12px; font-size:1rem; font-weight:700; cursor:pointer; transition:all .3s; letter-spacing:.5px; }
+    .submit-btn:hover{ transform:translateY(-3px); box-shadow:0 10px 30px rgba(8,145,178,.5); }
+
+    /* LOCATION */
+    #location{ background:#fff; padding:70px 5% 90px; }
+    .location-wrap{ max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1.4fr; gap:30px; align-items:stretch; }
+    .location-card{ background:linear-gradient(135deg,#0f172a,#0891b2); color:#fff; border-radius:20px; padding:35px; display:flex; flex-direction:column; justify-content:center; }
+    .location-card h3{ color:#fff; font-size:1.6rem; margin-bottom:15px; }
+    .location-card p{ color:#cfeaf5; line-height:1.8; margin-bottom:18px; }
+    .location-card a{ display:inline-flex; align-items:center; gap:8px; background:#fff; color:var(--dark); padding:12px 20px; border-radius:30px; font-weight:700; text-decoration:none; transition:.3s; }
+    .location-card a:hover{ transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,.25); }
+    .map-box{ border-radius:20px; overflow:hidden; box-shadow:0 15px 50px rgba(0,0,0,.12); min-height:340px; }
+    .map-box iframe{ width:100%; height:100%; min-height:340px; border:0; display:block; }
+
+    /* FOOTER */
+    footer{ background:#070e1f; color:#fff; padding:50px 5% 20px; }
+    .footer-grid{ display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:40px; max-width:1200px; margin:0 auto; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,.1); }
+    .footer-brand .name{ font-size:1.3rem; font-weight:700; margin-bottom:10px; background:linear-gradient(135deg,var(--secondary),var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .footer-brand p{ color:#64748b; line-height:1.7; font-size:.9rem; }
+    .footer-col h4{ color:#fff; font-size:1rem; margin-bottom:20px; font-weight:700; position:relative; padding-bottom:10px; }
+    .footer-col h4::after{ content:''; position:absolute; bottom:0; left:0; width:30px; height:2px; background:var(--secondary); border-radius:2px; }
+    .footer-col a{ display:block; color:#64748b; text-decoration:none; margin-bottom:10px; font-size:.9rem; transition:all .3s; }
+    .footer-col a:hover{ color:var(--secondary); padding-left:5px; }
+    .social-links{ display:flex; gap:12px; margin-top:20px; }
+    .social-links a{ width:42px; height:42px; background:rgba(255,255,255,.07); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none; font-size:1.1rem; transition:all .3s; border:1px solid rgba(255,255,255,.1); }
+    .social-links a:hover{ background:var(--secondary); transform:translateY(-4px); box-shadow:0 8px 20px rgba(6,182,212,.4); }
+    .footer-bottom{ text-align:center; padding-top:25px; color:#475569; font-size:.9rem; max-width:1200px; margin:0 auto; }
+
+    /* WhatsApp Float */
+    .whatsapp-float{ position:fixed; bottom:30px; right:30px; z-index:999; }
+    .whatsapp-float a{ width:60px; height:60px; background:linear-gradient(135deg,#25D366,#128C7E); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.8rem; text-decoration:none; box-shadow:0 5px 25px rgba(37,211,102,.5); transition:all .3s; animation:whatsappPulse 2s infinite; }
+    .whatsapp-float a:hover{ transform:scale(1.1); }
+    @keyframes whatsappPulse{ 0%,100%{box-shadow:0 5px 25px rgba(37,211,102,.5);} 50%{box-shadow:0 5px 40px rgba(37,211,102,.9);} }
+
+    .reveal{ opacity:0; transform:translateY(35px); transition:all .9s ease; }
+    .reveal.left{ transform:translateX(-35px); } .reveal.right{ transform:translateX(35px); }
+    .reveal.active{ opacity:1; transform:translate(0); }
+
+    @media (max-width:1024px){
+        .doctor-profile{ grid-template-columns:1fr; }
+        .profile-card{ max-width:400px; margin:0 auto; position:static; }
+        .treatments-grid{ grid-template-columns:repeat(2,1fr); }
+        .location-wrap{ grid-template-columns:1fr; }
+    }
+    @media (max-width:768px){
+        .nav-links{ position:fixed; top:70px; right:-100%; width:80%; height:calc(100vh - 70px); background:rgba(8,20,40,.98); flex-direction:column; padding:30px; transition:right .4s; gap:20px; }
+        .nav-links.active{ right:0; } .menu-toggle{ display:block; }
+        .hero-grid{ grid-template-columns:1fr; text-align:center; }
+        .hero-image{ order:-1; }
+        .doctor-frame{ width:280px; height:340px; margin:0 auto; }
+        .hero-rating,.hero-btns{ justify-content:center; }
+        .contact-grid,.footer-grid,.form-row{ grid-template-columns:1fr; }
+        .edu-grid{ grid-template-columns:1fr; }
+        .treatments-grid{ grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:480px){ .treatments-grid{ grid-template-columns:1fr; } .doctor-badge-card{ display:none; } }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav id="navbar">
+    <a href="#home" class="logo">
+        <img src="images/dr-hero.png" class="logo-img" alt="Dr. Vishal">
+        <div class="logo-text">
+            <div class="name">Dr. Vishal's Dental</div>
+            <div class="sub">CARE & IMPLANT CENTRE</div>
+        </div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#doctor">Our Doctor</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#contact" class="nav-cta">Book Appointment</a></li>
+    </ul>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+    <div class="hero-particles" id="particles"></div>
+    <div class="hero-grid">
+        <div class="hero-content">
+            <div class="hero-badge">🏆 &nbsp; Unnao's Most Trusted Dental Clinic</div>
+            <h1>Your Perfect <span>Smile</span><br>Starts Here</h1>
+            <div class="hero-subtitle">
+                Expert dental care by <strong style="color:#fff;">Dr. Vishal Arora (BDS)</strong> — 15+ years of delivering painless, modern dental treatments in Unnao.
+            </div>
+            <div class="hero-rating">
+                <span class="stars">⭐⭐⭐⭐⭐</span>
+                <span class="rating-text">4.8 / 5</span>
+                <span class="rating-badge">124+ Reviews</span>
+                <span class="rating-badge">Google Verified</span>
+            </div>
+            <div class="hero-btns">
+                <a href="#contact" class="btn btn-primary">📅 Book Appointment</a>
+                <a href="tel:09451220975" class="btn btn-outline">📞 094512 20975</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="doctor-frame">
+                <div class="doctor-img-wrap">
+                    <img src="images/dr-hero.png" alt="Dr. Vishal Arora">
+                </div>
+                <div class="doctor-badge-card top-left">
+                    <div class="badge-icon gold">🏆</div>
+                    <div class="badge-info"><div class="num">Award</div><div class="label">Winner</div></div>
+                </div>
+                <div class="doctor-badge-card bottom-right">
+                    <div class="badge-icon blue">✅</div>
+                    <div class="badge-info"><div class="num">BDS</div><div class="label">Certified</div></div>
+                </div>
+            </div>
+            <!-- 15+ Years Experience Sticker -->
+            <div class="exp-sticker">
+                <span class="sticker-icon">🎖️</span>
+                15+ Years of Experience
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Doctor Profile -->
+<section id="doctor">
+    <div class="section-title reveal">
+        <div class="section-tag tag-blue">👨‍⚕️ MEET YOUR DOCTOR</div>
+        <h2>Dr. Vishal Arora</h2>
+        <p>Dedicated to transforming smiles with precision, care, and expertise</p>
+    </div>
+    <div class="doctor-profile">
+        <div class="profile-card reveal left">
+            <div class="profile-img-wrap">
+                <img src="images/dr-profile.png" alt="Dr. Vishal Arora">
+                <div class="profile-img-overlay">
+                    <h3>Dr. Vishal Arora</h3>
+                    <p>BDS — Dental Surgeon</p>
+                </div>
+            </div>
+            <div class="profile-details">
+                <div class="profile-stat">
+                    <div class="p-stat"><div class="num">15+</div><div class="lbl">Years Exp.</div></div>
+                    <div class="p-stat"><div class="num">500+</div><div class="lbl">Patients</div></div>
+                    <div class="p-stat"><div class="num">4.8⭐</div><div class="lbl">Rating</div></div>
+                </div>
+                <div class="award-badge">
+                    <div class="award-icon">🏆</div>
+                    <div class="award-text"><div class="t">Award Winner</div><div class="s">Excellence in Dental Care</div></div>
+                </div>
+                <div class="contact-btn-wrap">
+                    <a href="tel:09451220975" class="call-btn">📞 Call: 094512 20975</a>
+                    <a href="https://wa.me/919451220975" target="_blank" class="whatsapp-btn-inline">💬 WhatsApp Us</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="doctor-info reveal right">
+            <h3>Dr. Vishal Arora</h3>
+            <div class="doctor-title">
+                <span class="title-tag">BDS</span>
+                <span class="title-tag">Dental Surgeon</span>
+                <span class="title-tag">15+ Yrs Experience</span>
+            </div>
+            <div class="about-text">
+                Dr. Vishal Arora, BDS is a well-known Dental practitioner in Unnao who is currently serving at
+                <strong>Kanpur Dental Care And Implant Centre</strong> situated at Shop No.4 Shere Punjab Building,
+                Rajdhani Marg, Opposite Saraswati Talkies, Shukla Ganj, Unnao. Dr. Vishal Arora possesses extensive
+                expertise in addressing various dental conditions, both major and minor, offering top-notch treatments
+                for dental diseases, tooth color corrections, acrylic procedures, artificial teeth, braces, and cast partial dentures.
+            </div>
+            <div class="edu-grid">
+                <div class="edu-card"><div class="edu-icon cyan">🎓</div><div><h4>Education</h4><p>BDS Degree</p></div></div>
+                <div class="edu-card"><div class="edu-icon gold">🏥</div><div><h4>Hospital</h4><p>Kanpur Dental Care</p></div></div>
+                <div class="edu-card"><div class="edu-icon green">🌍</div><div><h4>Country</h4><p>India</p></div></div>
+                <div class="edu-card"><div class="edu-icon purple">⏱️</div><div><h4>Experience</h4><p>15+ Years</p></div></div>
+            </div>
+            <div class="treatments-wrap">
+                <h4>Treatments Offered</h4>
+                <div class="treatments-grid">
+                    <div class="treatment-pill">Abnormal Tooth Color</div>
+                    <div class="treatment-pill">Acrylic Treatment</div>
+                    <div class="treatment-pill">Artificial Teeth</div>
+                    <div class="treatment-pill">Braces Treatment</div>
+                    <div class="treatment-pill">Cast Partial Denture</div>
+                    <div class="treatment-pill">Ceramic Veneers</div>
+                    <div class="treatment-pill">Composite Filling</div>
+                    <div class="treatment-pill">Cross Bite Treatment</div>
+                    <div class="treatment-pill">Delayed Tooth Formation</div>
+                    <div class="treatment-pill">Dental Calculus</div>
+                    <div class="treatment-pill">Dental Fluorosis</div>
+                    <div class="treatment-pill">Invisible Braces</div>
+                    <div class="treatment-pill">Dental Prosthetics</div>
+                    <div class="treatment-pill">Discolored Tooth</div>
+                    <div class="treatment-pill">Fixed Prosthesis</div>
+                    <div class="treatment-pill">Fluoride Therapy</div>
+                    <div class="treatment-pill">General Checkup</div>
+                    <div class="treatment-pill">Impacted Teeth Surgery</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services -->
+<section id="services">
+    <div class="section-title reveal">
+        <div class="section-tag tag-blue">💎 OUR SERVICES</div>
+        <h2>World-Class Dental Services</h2>
+        <p>Advanced treatments delivered with the latest technology and gentle care</p>
+    </div>
+    <div class="services-grid">
+        <div class="service-card reveal">
+            <div class="service-img-wrap"><img class="service-img" src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=600&q=80" alt="Dental Implants"></div>
+            <div class="service-body"><div class="service-icon-row"><div class="s-icon c1">🦷</div><h3>Dental Implants</h3></div>
+                <p>Permanent tooth replacement using titanium implants for a completely natural look and function.</p><span class="service-tag c1">Most Popular</span></div>
+        </div>
+        <div class="service-card reveal">
+            <div class="service-img-wrap"><img class="service-img" src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80" alt="Teeth Whitening"></div>
+            <div class="service-body"><div class="service-icon-row"><div class="s-icon c2">✨</div><h3>Teeth Whitening</h3></div>
+                <p>Professional whitening treatments that deliver noticeably brighter smiles safely and effectively.</p><span class="service-tag c2">Instant Results</span></div>
+        </div>
+        <div class="service-card reveal">
+            <div class="service-img-wrap"><img class="service-img" src="https://images.unsplash.com/photo-1606265752439-1f18756aa2c?auto=format&fit=crop&w=600&q=80" alt="Braces"></div>
+            <div class="service-body"><div class="service-icon-row"><div class="s-icon c3">😁</div><h3>Braces & Aligners</h3></div>
+                <p>Traditional braces, ceramic, and invisible aligners to straighten teeth perfectly.</p><span class="service-tag c3">Custom Fit</span></div>
+        </div>
+        <div class="service-card reveal">
+            <div class="service-img-wrap"><img class="service-img" src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=600&q=80" alt="Root Canal"></div>
+            <div class="service-body"><div class="service-icon-row"><div class="s-icon c4">🔬</div><h3>Root Canal</h3></div>
+                <p>Painless root canal therapy using advanced rotary systems to save your natural teeth.</p><span class="service-tag c4">Painless</span></div>
+        </div>
+        <div class="service-card reveal">
+            <div class="service-img-wrap"><img class="service-img" src="https://images.unsplash.com/photo-1588776814546-daab30f310d9?auto=format&fit=crop&w=600&q=80" alt="Crowns"></div>
+            <div class="service-body"><div class="service-icon-row"><div class="s-icon c5">👑</div><h3>Crowns & Veneers</h3></div>
+                <p>High-quality ceramic crowns, veneers and bridges restoring beauty and function of your teeth.</p><span class="service-tag c5">Premium</span></div>
+        </div>
+        <div class="service-card reveal">
+            <div class="service-img-wrap"><img class="service-img" src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80" alt="General Dentistry"></div>
+            <div class="service-body"><div class="service-icon-row"><div class="s-icon c6">🩺</div><h3>General Dentistry</h3></div>
+                <p>Routine check-ups, fillings, extractions, scaling, fluoride therapy and complete family dental care.</p><span class="service-tag c6">Family Care</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats -->
+<div class="stats">
+    <div class="stats-grid">
+        <div class="stat-item reveal"><span class="stat-emoji">😊</span><h3 class="counter" data-target="500">0</h3><p>Happy Patients</p></div>
+        <div class="stat-item reveal"><span class="stat-emoji">⭐</span><h3>4.8</h3><p>Google Rating</p></div>
+        <div class="stat-item reveal"><span class="stat-emoji">📅</span><h3 class="counter" data-target="15">0</h3><p>Years Experience</p></div>
+        <div class="stat-item reveal"><span class="stat-emoji">🦷</span><h3 class="counter" data-target="18">0</h3><p>Treatments Offered</p></div>
+        <div class="stat-item reveal"><span class="stat-emoji">🏆</span><h3>Awards</h3><p>Excellence Winner</p></div>
+    </div>
+</div>
+
+<!-- Reviews -->
+<section id="reviews">
+    <div class="section-title reveal">
+        <div class="section-tag tag-blue">⭐ PATIENT REVIEWS</div>
+        <h2>What Our Patients Say</h2>
+        <p>Real stories from real patients who trust us with their smiles</p>
+    </div>
+    <div class="overall-rating reveal">
+        <div class="rating-big"><span class="num">4.8</span><div class="stars">⭐⭐⭐⭐⭐</div><div class="lbl">124+ Reviews</div></div>
+    </div>
+    <div class="reviews-grid">
+        <div class="review-card reveal">
+            <div class="review-header"><div class="review-avatar av1">V</div><div><div class="review-name">Vishal Vimal</div><div class="review-date">⏱ 4 months ago · Google Review</div></div></div>
+            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+            <p class="review-text">"Excellent dental care service at Shuklaganj branch. Dr. Vishal's Kanpur Dental Care is highly recommended for quality treatment and friendly staff!"</p>
+        </div>
+        <div class="review-card reveal">
+            <div class="review-header"><div class="review-avatar av2">J</div><div><div class="review-name">Jatin Sharma</div><div class="review-date">⏱ 2 months ago · Google Review</div></div></div>
+            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+            <p class="review-text">"I had a very good experience with the doctor and his executives during my tooth extraction process. Thanks to all for making my experience wonderful and comforting."</p>
+        </div>
+        <div class="review-card reveal">
+            <div class="review-header"><div class="review-avatar av3">A</div><div><div class="review-name">Aman Katiyar</div><div class="review-date">⏱ 10 months ago · Local Guide</div></div></div>
+            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+            <p class="review-text">"Dr. Vishal Arora is extremely professional, polite, and explains every step of the treatment clearly. The clinic is well-maintained, hygienic, and equipped with modern facilities."</p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+    <div class="section-title reveal">
+        <div class="section-tag tag-blue">📞 GET IN TOUCH</div>
+        <h2>Book Your Appointment</h2>
+        <p>Take the first step towards your perfect smile today</p>
+    </div>
+    <div class="contact-grid">
+        <div class="contact-info reveal left">
+            <h3>📍 Visit Us</h3>
+            <div class="contact-item"><div class="ci-icon">📍</div><div><h4>Address</h4><p>Shop No.4, Shere Punjab Building,<br>Rajdhani Marg, Opp. Saraswati Talkies,<br>Shukla Ganj, Unnao - 209861, U.P.</p></div></div>
+            <div class="contact-item"><div class="ci-icon">📞</div><div><h4>Phone</h4><a href="tel:09451220975">094512 20975</a></div></div>
+            <div class="contact-item"><div class="ci-icon">⏰</div><div><h4>Working Hours</h4><p>Monday – Sunday<br>Opens 12:30 PM onwards</p></div></div>
+            <div class="contact-item"><div class="ci-icon">🗺</div><div><h4>Map Code</h4><p>F9GM+93 Unnao, Uttar Pradesh</p></div></div>
+        </div>
+        <div class="contact-form reveal right">
+            <h3>✉️ Send a Message</h3>
+            <form onsubmit="handleSubmit(event)">
+                <div class="form-row">
+                    <div class="form-group"><label>Full Name *</label><input type="text" required placeholder="Your name"></div>
+                    <div class="form-group"><label>Phone *</label><input type="tel" required placeholder="Your phone"></div>
+                </div>
+                <div class="form-group"><label>Email</label><input type="email" placeholder="Your email (optional)"></div>
+                <div class="form-group"><label>Treatment Required</label>
+                    <select><option value="">Select Treatment</option><option>Dental Implants</option><option>Teeth Whitening</option><option>Braces / Aligners</option><option>Root Canal</option><option>Crown / Veneer</option><option>Tooth Extraction</option><option>Scaling / Cleaning</option><option>Invisible Braces</option><option>General Check-up</option><option>Other</option></select>
+                </div>
+                <div class="form-group"><label>Message</label><textarea placeholder="Describe your dental concern..."></textarea></div>
+                <button type="submit" class="submit-btn">📅 Confirm Appointment</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+    <div class="section-title reveal">
+        <div class="section-tag tag-blue">📍 FIND US</div>
+        <h2>Our Location</h2>
+        <p>Visit Dr. Vishal's Dental Care & Implant Centre in Shuklaganj, Unnao</p>
+    </div>
+    <div class="location-wrap reveal">
+        <div class="location-card">
+            <h3>📍 Clinic Address</h3>
+            <p>Shop No.4, Shere Punjab Building, Rajdhani Marg, Opposite Saraswati Talkies, Shukla Ganj, Unnao, Uttar Pradesh – 209861</p>
+            <p>📞 094512 20975 &nbsp;•&nbsp; ⏰ Opens 12:30 PM</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Dr+Vishal+Dental+Care+and+Implant+Centre+Shuklaganj+Unnao" target="_blank">🧭 Get Directions</a>
+        </div>
+        <div class="map-box">
+            <iframe src="https://www.google.com/maps?q=Shuklaganj,Unnao,Uttar+Pradesh&output=embed" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <div class="name">🦷 Dr. Vishal's Dental Care</div>
+            <p>Your trusted dental care partner in Unnao. We deliver painless, modern dental care with compassion and expertise. Serving 500+ happy patients across Unnao and Kanpur.</p>
+            <div class="social-links">
+                <a href="#" title="Facebook">📘</a>
+                <a href="#" title="Instagram">📷</a>
+                <a href="#" title="YouTube">📺</a>
+                <a href="https://wa.me/919451220975" title="WhatsApp">💬</a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <a href="#home">Home</a><a href="#doctor">Our Doctor</a><a href="#services">Services</a><a href="#reviews">Reviews</a><a href="#location">Location</a>
+        </div>
+        <div class="footer-col">
+            <h4>Treatments</h4>
+            <a href="#services">Dental Implants</a><a href="#services">Teeth Whitening</a><a href="#services">Braces & Aligners</a><a href="#services">Root Canal</a><a href="#services">Crowns & Veneers</a><a href="#services">Invisible Braces</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2024 Dr. Vishal's Dental Care & Implant Centre, Unnao. All Rights Reserved.</p>
+        <p style="margin-top:8px; font-size:.8rem;">📍 Shop No.4, Shere Punjab Building, Rajdhani Marg, Shuklaganj, Unnao, UP 209861</p>
+    </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<div class="whatsapp-float"><a href="https://wa.me/919451220975" target="_blank" title="Chat on WhatsApp">💬</a></div>
+
+<script>
+/* Navbar scroll */
+window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* Mobile menu */
+function toggleMenu(){ document.getElementById('navLinks').classList.toggle('active'); }
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('active'));
+});
+
+/* Particles */
+const container = document.getElementById('particles');
+for(let i=0;i<25;i++){
+    const p = document.createElement('div'); p.classList.add('particle');
+    p.style.left = Math.random()*100 + '%';
+    p.style.width = p.style.height = (Math.random()*8+3) + 'px';
+    p.style.animationDuration = (Math.random()*15+8) + 's';
+    p.style.animationDelay = (Math.random()*10) + 's';
+    p.style.opacity = Math.random()*0.6 + 0.2;
+    container.appendChild(p);
+}
+
+/* Scroll reveal */
+const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry,i) => { if(entry.isIntersecting){ setTimeout(()=>entry.target.classList.add('active'), i*80); } });
+}, { threshold:0.08 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* Counters */
+const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            const el = entry.target; const target = parseInt(el.getAttribute('data-target'));
+            let count = 0; const step = target/60;
+            const timer = setInterval(() => {
+                count += step;
+                if(count >= target){ count = target; clearInterval(timer); }
+                el.textContent = Math.floor(count) + '+';
+            }, 25);
+            counterObs.unobserve(el);
+        }
+    });
+}, { threshold:0.5 });
+document.querySelectorAll('.counter').forEach(c => counterObs.observe(c));
+
+/* Form */
+function handleSubmit(e){
+    e.preventDefault();
+    const btn = e.target.querySelector('.submit-btn');
+    btn.textContent = '✅ Request Sent!';
+    btn.style.background = 'linear-gradient(135deg,#10b981,#34d399)';
+    setTimeout(() => { btn.textContent = '📅 Confirm Appointment'; btn.style.background=''; e.target.reset(); }, 3000);
+}
+
+/* Smooth scroll */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e){
+        const t = document.querySelector(this.getAttribute('href'));
+        if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+});
+</script>
+</body>
+</html>
